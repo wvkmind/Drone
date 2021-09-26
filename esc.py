@@ -1,15 +1,51 @@
 import RPi.GPIO as gpio
 import time,sys
-pin=16
-gpio.setmode(gpio.BOARD)
-gpio.setup(pin,gpio.OUT)
-p=gpio.PWM(pin,400)
-p.start(0)
-dc=10
-for i in range(40):
-  dc += 2
-  print('dc:',dc)
-  p.ChangeDutyCycle(dc)
-  time.sleep(0.3);
-p.stop()
-gpio.cleanup()
+class Motor(object):
+  def __init__(self, pin_number, hz):
+    self.hz = hz
+    self.pin_number = pin_number
+    self.duty_cycle = 0
+    
+  def start(self):
+    gpio.setmode(gpio.BOARD)
+    gpio.setup(self.pin_number,gpio.OUT)
+    self.port=gpio.PWM(self.pipin_numbern,self.hz)
+    self.port.start(0)
+    self.duty_cycle = 50
+    self.change_duty_cycle()
+    time.sleep(4)
+
+  def restart(self):
+    self.shutdown()
+    self.start()
+
+  def change_duty_cycle(self):
+    self.port.ChangeDutyCycle(self.duty_cycle)
+
+  def shutdown(self):
+    self.duty_cycle = 0
+    self.port.stop()
+    gpio.cleanup(self.pin_number)
+
+  def set_speed(self,speed):
+    self.duty_cycle = speed / 2.0 + 50
+    if(self.duty_cycle < 50):
+      self.duty_cycle = 50
+    elif(self.duty_cycle > 100):
+      self.duty_cycle = 100
+    self.change_duty_cycle()
+
+  def test_add_step_1(self):
+    for i in range(1,101):
+      self.set_speed(i)
+
+  def test_dec_step_1(self):
+    for i in range(100):
+      self.set_speed(100-i)
+
+motor = Motor(16,400)
+motor.start()
+motor.test_add_step_1()
+motor.test_dec_step_1()
+motor.shutdown()
+
