@@ -9,11 +9,14 @@ class Motor(object):
   def start(self):
     gpio.setmode(gpio.BOARD)
     gpio.setup(self.pin_number,gpio.OUT)
-    self.port=gpio.PWM(self.pipin_numbern,self.hz)
+    self.port=gpio.PWM(self.pin_number,self.hz)
     self.port.start(0)
     self.duty_cycle = 50
     self.change_duty_cycle()
     time.sleep(4)
+    self.duty_cycle = 51
+    self.change_duty_cycle()
+    time.sleep(5)
 
   def restart(self):
     self.shutdown()
@@ -38,14 +41,21 @@ class Motor(object):
   def test_add_step_1(self):
     for i in range(1,101):
       self.set_speed(i)
+      time.sleep(1)
 
   def test_dec_step_1(self):
     for i in range(100):
       self.set_speed(100-i)
+      time.sleep(1)
 
 motor = Motor(16,400)
 motor.start()
-motor.test_add_step_1()
-motor.test_dec_step_1()
+#motor.test_add_step_1()
+#motor.test_dec_step_1()
+#while(1):
+motor.set_speed(50)
+
+time.sleep(20)
+
 motor.shutdown()
 
