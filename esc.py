@@ -11,12 +11,18 @@ class Motor(object):
     gpio.setup(self.pin_number,gpio.OUT)
     self.port=gpio.PWM(self.pin_number,self.hz)
     self.port.start(0)
-    self.duty_cycle = 50
-    self.change_duty_cycle()
-    time.sleep(4)
-    self.duty_cycle = 51
-    self.change_duty_cycle()
-    time.sleep(5)
+    #self.duty_cycle = 100
+    #self.change_duty_cycle()
+    #time.sleep(4)
+    #self.duty_cycle = 0
+    #self.change_duty_cycle()
+    #time.sleep(4)
+    #self.duty_cycle = 50
+    #self.change_duty_cycle()
+    #time.sleep(4)
+    #self.duty_cycle = 0
+    #self.change_duty_cycle()
+    #time.sleep(1)
 
   def restart(self):
     self.shutdown()
@@ -48,14 +54,41 @@ class Motor(object):
       self.set_speed(100-i)
       time.sleep(1)
 
+  def test(self):
+      print("test50")
+      self.duty_cycle = 50
+      self.change_duty_cycle()
+      time.sleep(3)
+      print("test70")
+      self.duty_cycle = 80
+      self.change_duty_cycle()
+      time.sleep(1)
+      print("test75")
+      self.duty_cycle = 81
+      self.change_duty_cycle()
+      time.sleep(1)
+      print("test80")
+      self.duty_cycle = 82
+      self.change_duty_cycle()
+      time.sleep(1)
+      print("test85")
+      self.duty_cycle = 83
+      self.change_duty_cycle()
+      time.sleep(1)
+      print("test50")
+      self.duty_cycle = 84
+      self.change_duty_cycle()
+
 motor = Motor(16,400)
 motor.start()
 #motor.test_add_step_1()
 #motor.test_dec_step_1()
 #while(1):
-motor.set_speed(50)
-
-time.sleep(20)
+#motor.set_speed(70)
+motor.test()
+time.sleep(3)
+#motor.set_speed(100)
+#time.sleep(10)
 
 motor.shutdown()
 
