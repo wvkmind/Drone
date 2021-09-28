@@ -11,24 +11,20 @@ class Motor(object):
     gpio.setup(self.pin_number,gpio.OUT)
     self.port=gpio.PWM(self.pin_number,self.hz)
     self.port.start(0)
-    #self.duty_cycle = 100
-    #self.change_duty_cycle()
-    #time.sleep(4)
-    #self.duty_cycle = 0
-    #self.change_duty_cycle()
-    #time.sleep(4)
-    #self.duty_cycle = 50
-    #self.change_duty_cycle()
-    #time.sleep(4)
-    #self.duty_cycle = 0
-    #self.change_duty_cycle()
-    #time.sleep(1)
+    self.change_duty_cycle(96)
+    time.sleep(3);
+    print("最高油门设定")
+    self.change_duty_cycle(30)
+    time.sleep(6);
+    print("最低油门设定")
+  
 
   def restart(self):
     self.shutdown()
     self.start()
 
-  def change_duty_cycle(self):
+  def change_duty_cycle(self,duty_cycle):
+    self.duty_cycle = duty_cycle
     self.port.ChangeDutyCycle(self.duty_cycle)
 
   def shutdown(self):
@@ -42,7 +38,7 @@ class Motor(object):
       self.duty_cycle = 50
     elif(self.duty_cycle > 100):
       self.duty_cycle = 100
-    self.change_duty_cycle()
+    self.change_duty_cycle(self.duty_cycle)
 
   def test_add_step_1(self):
     for i in range(1,101):
@@ -55,29 +51,11 @@ class Motor(object):
       time.sleep(1)
 
   def test(self):
-      print("test50")
-      self.duty_cycle = 50
-      self.change_duty_cycle()
-      time.sleep(3)
-      print("test70")
-      self.duty_cycle = 80
-      self.change_duty_cycle()
-      time.sleep(1)
-      print("test75")
-      self.duty_cycle = 81
-      self.change_duty_cycle()
-      time.sleep(1)
-      print("test80")
-      self.duty_cycle = 82
-      self.change_duty_cycle()
-      time.sleep(1)
-      print("test85")
-      self.duty_cycle = 83
-      self.change_duty_cycle()
-      time.sleep(1)
-      print("test50")
-      self.duty_cycle = 84
-      self.change_duty_cycle()
+    for dc in range(20, 80, 1):
+      motor.change_duty_cycle(dc)
+      print("dc:"+str(dc))
+      time.sleep(0.3);
+
 
 motor = Motor(16,400)
 motor.start()
@@ -86,7 +64,6 @@ motor.start()
 #while(1):
 #motor.set_speed(70)
 motor.test()
-time.sleep(3)
 #motor.set_speed(100)
 #time.sleep(10)
 
