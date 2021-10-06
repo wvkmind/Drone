@@ -10,13 +10,17 @@ class Motor(object):
     gpio.setmode(gpio.BOARD)
     gpio.setup(self.pin_number,gpio.OUT)
     self.port=gpio.PWM(self.pin_number,self.hz)
+    #self.port.stop()
     self.port.start(0)
-    self.change_duty_cycle(96)
-    time.sleep(3);
-    print("最高油门设定")
-    self.change_duty_cycle(30)
+    #time.sleep(3)
+    #print("set hi")
+    #self.change_duty_cycle(96)
+    #time.sleep(3);
+    #print("set low")
+    self.change_duty_cycle(50)
     time.sleep(6);
-    print("最低油门设定")
+    #self.change_duty_cycle(40)
+    #time.sleep(6)
   
 
   def restart(self):
@@ -51,10 +55,14 @@ class Motor(object):
       time.sleep(1)
 
   def test(self):
-    for dc in range(20, 80, 1):
+    for dc in range(1, 80, 1):
       motor.change_duty_cycle(dc)
       print("dc:"+str(dc))
       time.sleep(0.3);
+    #for dc in range(80, 40, -1):
+      #motor.change_duty_cycle(dc)
+      #print("dc:"+str(dc))
+      #time.sleep(0.3);
 
 
 motor = Motor(16,400)
