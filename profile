@@ -25,6 +25,9 @@ fi
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
-sh /home/pi/Desktop/link_net.sh
-python /home/pi/Desktop/drone/wa.py &
-sudo /home/pi/Desktop/phtunnel --appid 13465 --appkey 8c765a140e216f70 -l ./tmp.log -d -r
+count=`ps -ef | grep phtunnel | grep -v "grep" | wc -l`
+if [ 0 == $count ] ; then
+	sh /home/pi/Desktop/link_net.sh
+	python /home/pi/Desktop/drone/wa.py &
+	sudo /home/pi/Desktop/drone/phtunnel --appid 13465 --appkey 8c765a140e216f70 -l ./tmp.log -d -r
+fi
