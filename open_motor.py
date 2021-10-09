@@ -14,23 +14,23 @@ class Motor(object):
     self.port=gpio.PWM(self.pin_number,self.hz)
     #self.port.stop()
     self.port.start(0)
-    time.sleep(3)
+    #time.sleep(3)
     #gpio.output(self.pin_number,gpio.LOW)
     #time.sleep(3)
     #gpio.output(self.pin_number,gpio.HIGH)
     #time.sleep(3)
     #print("1")
-    #self.port.ChangeDutyCycle(100)
+    self.port.ChangeDutyCycle(96)
     #print("2")
     #print("96-")
-    #time.sleep(6)
-    print("3")
-    self.port.ChangeDutyCycle(50)
-    print("4")
     time.sleep(4)
-    #self.port.ChangeDutyCycle(30)
-    #print("5")
+    print("3")
+    #self.port.ChangeDutyCycle(50)
+    #print("4")
     #time.sleep(4)
+    self.port.ChangeDutyCycle(30)
+    print("5")
+    time.sleep(4)
     #print("6")
     #self.change_duty_cycle(50)
     #time.sleep(6);
@@ -55,7 +55,7 @@ class Motor(object):
     gpio.cleanup(self.pin_number)
 
   def test(self):
-    for dc in range(50, 75, 1):
+    for dc in range(20, 80, 1):
       self.port.ChangeDutyCycle(dc)
       print("dc:"+str(dc))
       time.sleep(0.3);
@@ -65,9 +65,9 @@ class Motor(object):
       #time.sleep(0.3);
 
 
-#motor = Motor(16,400)
+motor = Motor(16,400)
 #motor = Motor(22,400)
-motor = Motor(32,400)
+#motor = Motor(32,400)
 #motor = Motor(11,400)
 motor.start()
 #motor.test_add_step_1()
@@ -79,4 +79,6 @@ motor.test()
 #time.sleep(10)
 
 motor.shutdown()
+
+
 
